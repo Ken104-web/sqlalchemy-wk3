@@ -26,13 +26,17 @@ class Restaurant(Base):
     # reviews= relationship('Review', backref=backref('restaurant'))
     review = relationship('Review', backref=backref('restaurant'))
     # many to many with customers
-    customers = relationship('Customer', secondary=customer_restaurant, back_populates='restaurant')
+    # customers = relationship('Customer', secondary=customer_restaurant, back_populates='restaurant')
 
     def get_reviews(self):
         return self.reviews
     
     def all_customers(self):
         return self.customers
+    
+    @property
+    def full_name(self):
+        return f"{self.first_name} {self.last_name}"
 
 
 class Review(Base):
@@ -44,8 +48,8 @@ class Review(Base):
     customer_id = Column(Integer, ForeignKey('customer.id'))
 
     # many to one relation
-    # customer = relationship('Customer', backref=backref('review'))
-    # restaurant = relationship('Restaurants', backref=backref('review'))
+    customer = relationship('Customer', backref=backref('review'))
+    restaurant = relationship('Restaurants', backref=backref('review'))
    
     def get_customer(self):
         return self.customer
@@ -61,15 +65,16 @@ class Customer(Base):
     first_name = Column(String())
     last_name = Column(String())
 
-    # restaurants = relationship('Restaurant', secondary=customer_restaurant, backref=backref('customers'))
+    restaurants = relationship('Restaurant', secondary=customer_restaurant, backref=backref('customers'))
     
-    # reviews = relationship('Review', backref=backref('customers_name'))
+    reviews = relationship('Review', backref=backref('customers_name'))
     
     def get_reviews(self):
         return self.reviews
     
     def all_restaurants(self):
         return self.restaurants
+
 
     
 

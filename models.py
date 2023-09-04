@@ -25,6 +25,13 @@ class Restaurants(Base):
     # many to many with customers
     customers = relationship('Customer', secondary=customer_restaurant, back_populates='restaurant')
 
+    def get_reviews(self):
+        return self.reviews
+    
+    def all_customers(self):
+        return self.customers
+
+
 class Review(Base):
     __tablename__ = 'review'
 
@@ -35,19 +42,39 @@ class Review(Base):
 
     # many to one relation
     customer = relationship('Customer', backref='reviews')
+    restaurant = relationship('Restaurant', backref='reviews')
+   
+    def get_customer(self):
+        return self.customer
+    
+    def get_restaurant(self):
+        return self.restaurant
 
 
 class Customer(Base):
     __tablename__ = 'customer'
 
     id = Column(Integer(), primary_key=True)
-    first_name = (String())
-    last_name = (String())
-
+    first_name = Column(String())
+    last_name = Column(String())
 
     restaurants = relationship('Restaurant', secondary=customer_restaurant, backref='customers')
+    
+    reviews = relationship('Review', backref= 'customers')
+    
+    def get_reviews(self):
+        return self.reviews
+    
+    def all_restaurants(self):
+        return self.restaurants
+
+    
+
+    
 
 
+
+    
     
     
 

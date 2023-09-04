@@ -13,15 +13,18 @@ Base = declarative_base()
 # creating table
 customer_restaurant = Table('customer_restaurant', Base.metadata, Column('restaurant_id', ForeignKey('restaurant.id'), primary_key = True), Column('customer_id', ForeignKey('customer.id'), primary_key = True))
 
-class Restaurants(Base):
-    __tablename__ = 'restaurant'
+class Restaurant(Base):
+    __tablename__ = 'restaurants'
 
     id = Column(Integer(), primary_key=True)
     name = Column(String())
     price = Column(Integer())
 
+    
+
     #  one to many
-    reviews = relationship('Review', backref=backref('restaurant'))
+    # reviews= relationship('Review', backref=backref('restaurant'))
+    review = relationship('Review', backref=backref('restaurant'))
     # many to many with customers
     customers = relationship('Customer', secondary=customer_restaurant, back_populates='restaurant')
 
@@ -41,8 +44,8 @@ class Review(Base):
     customer_id = Column(Integer, ForeignKey('customer.id'))
 
     # many to one relation
-    customer = relationship('Customer', backref='reviews')
-    restaurant = relationship('Restaurant', backref='reviews')
+    # customer = relationship('Customer', backref=backref('review'))
+    # restaurant = relationship('Restaurants', backref=backref('review'))
    
     def get_customer(self):
         return self.customer
@@ -58,9 +61,9 @@ class Customer(Base):
     first_name = Column(String())
     last_name = Column(String())
 
-    restaurants = relationship('Restaurant', secondary=customer_restaurant, backref='customers')
+    # restaurants = relationship('Restaurant', secondary=customer_restaurant, backref=backref('customers'))
     
-    reviews = relationship('Review', backref= 'customers')
+    # reviews = relationship('Review', backref=backref('customers_name'))
     
     def get_reviews(self):
         return self.reviews

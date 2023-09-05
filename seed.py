@@ -17,12 +17,12 @@ if __name__ == '__main__':
         new_customer = Customer(first_name=fake.name(),
         last_name=fake.last_name()
         )
-        # session.add(new_customer)
-        # print('customers counted')
+    #     session.add(new_customer)
+    #     print('customers counted')
 
     # print('Now counting restaurants')
     # for restaurant in range(7):
-    #     restaurant = Restaurants(
+    #     restaurant = Restaurant(
     #         name=fake.company(),
     #         price=fake.random_int(min=1, max=7)
 

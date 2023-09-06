@@ -1,7 +1,7 @@
 """added seed.py
 
 Revision ID: 55d8660c5bfd
-Revises: cbc142fd5ae7
+Revises: 180e0141be92
 Create Date: 2023-09-04 16:04:38.030068
 
 """
@@ -13,7 +13,7 @@ import sqlalchemy as sa
 
 # revision identifiers, used by Alembic.
 revision: str = '55d8660c5bfd'
-down_revision: Union[str, None] = 'cbc142fd5ae7'
+down_revision: Union[str, None] = '180e0141be92'
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 

@@ -3,7 +3,7 @@ from sqlalchemy import create_engine
 from faker import Faker
 from models import Customer, Restaurant, Review
 
-engine = create_engine('sqlite:///review.db')
+engine = create_engine('sqlite:///reviews3.db')
 Session = sessionmaker(bind=engine)
 session = Session()
 
@@ -18,7 +18,7 @@ if __name__ == '__main__':
         last_name=fake.last_name()
         )
         session.add(new_customer)
-        print('customers counted')
+    print('customers counted')
 
     print('Now counting restaurants')
     for restaurant in range(7):

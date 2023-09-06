@@ -5,13 +5,13 @@ from sqlalchemy.orm import relationship, backref
 from sqlalchemy.orm import sessionmaker
 
 
-engine = create_engine('sqlite:///review.db')
+engine = create_engine('sqlite:///reviews3.db')
 Session = sessionmaker(bind=engine)
 session = Session()
 Base = declarative_base()
 #  many to many
 # creating table
-customer_restaurant = Table('customer_restaurant', Base.metadata, Column('restaurant_id', ForeignKey('restaurant.id'), primary_key = True), Column('customer_id', ForeignKey('customer.id'), primary_key = True))
+customer_restaurant = Table('customer_restaurant', Base.metadata, Column('restaurant_id', ForeignKey('restaurants.id'), primary_key = True), Column('customer_id', ForeignKey('customers.id'), primary_key = True))
 
 class Restaurant(Base):
 
@@ -21,10 +21,10 @@ class Restaurant(Base):
     name = Column(String())
     price = Column(Integer())
 
-    review = relationship('Review', backref=backref('restaurant_reviews'))
+    review = relationship('Review', backref=backref('restaurant_name'))
 
         # many to many with customers
-    customer = relationship('Customer', secondary=customer_restaurant, back_populates='restaurant')
+    customers = relationship('Customer', secondary=customer_restaurant, back_populates='restaurants')
 
 
     def get_reviews(self):
@@ -40,16 +40,16 @@ class Restaurant(Base):
 
 
 class Review(Base):
-    __tablename__ = 'review'
+    __tablename__ = 'reviews'
 
     id = Column(Integer, primary_key=True)
     star_rating = Column(Integer)
     restaurant_id = Column(Integer, ForeignKey('restaurants.id'))
-    customer_id = Column(Integer, ForeignKey('customer.id'))
+    customer_id = Column(Integer, ForeignKey('customers.id'))
 
     # many to one relation
     customer = relationship('Customer', backref=backref('review'))
-    restaurant = relationship('Restaurants', backref=backref('review'))
+    restaurant = relationship('Restaurant', backref=backref('review_comment'))
    
     def get_customer(self):
         return self.customer
@@ -59,7 +59,7 @@ class Review(Base):
 
 
 class Customer(Base):
-    __tablename__ = 'customer'
+    __tablename__ = 'customers'
 
     id = Column(Integer(), primary_key=True)
     first_name = Column(String())
@@ -68,7 +68,8 @@ class Customer(Base):
     # many to many  with customers
     restaurants = relationship('Restaurant', secondary=customer_restaurant, back_populates='customers')
     
-    reviews = relationship('Review', back_populates='customer')
+    # one to many with customer
+    reviews = relationship('Review', backref=backref('customer_name'))
     
 
     def get_reviews(self):

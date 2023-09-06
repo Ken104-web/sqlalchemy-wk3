@@ -1,7 +1,7 @@
 """created customer and restaurant models
 
 Revision ID: d0905c26e76d
-Revises: c5cfe241a8cc
+Revises: 
 Create Date: 2023-09-04 10:20:32.531263
 
 """
@@ -13,7 +13,7 @@ import sqlalchemy as sa
 
 # revision identifiers, used by Alembic.
 revision: str = 'd0905c26e76d'
-down_revision: Union[str, None] = 'c5cfe241a8cc'
+down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 

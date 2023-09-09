@@ -71,6 +71,8 @@ class Customer(Base):
     # one to many with customer
     reviews = relationship('Review', backref=backref('customer_name'))
     
+    def full_name(self):
+        return f"{self.first_name} {self.last_name}"
 
     def get_reviews(self):
         return self.reviews
@@ -91,6 +93,8 @@ class Customer(Base):
                 fovorite_restaurant = review.restaurant
 
         return fovorite_restaurant
+     
+     
 
 
     

@@ -49,7 +49,7 @@ class Review(Base):
 
     # many to one relation
     customer = relationship('Customer', backref=backref('review'))
-    restaurant = relationship('Restaurant', backref=backref('review_comment'))
+    restaurant = relationship('Restaurant', back_populates='review_comment')
    
     def get_customer(self):
         return self.customer

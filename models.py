@@ -58,7 +58,7 @@ class Review(Base):
         return self.restaurant
     
     def full_review(self):
-        return f"Review for {self.restaurant.name} by {self.customer.full_name}: {self.star_rating} stars."
+        return f"Review for {self.restaurant.name} by {self.customer.full_name}: {self.star_rating} stars"
         
 
 
@@ -73,8 +73,9 @@ class Customer(Base):
     restaurants = relationship('Restaurant', secondary=customer_restaurant, back_populates='customers')
     
     # one to many with customer
-    reviews = relationship('Review', backref=backref('customer_name'))
+    reviews = relationship('Review', backref=backref('customer_name'), overlaps="customer, review")
     
+    @property
     def full_name(self):
         return f"{self.first_name} {self.last_name}"
 
@@ -102,8 +103,7 @@ class Customer(Base):
         review = Review(customer=self, restaurant=restaurant, star_rating=rating)
         session.add(review)
 
-    def delete_review(self, session, restaurant):
-        review = Restaurant(customer=self, restaurant=restaurant)
+    def delete_review(self, review):
         session.delete(review)
 
 

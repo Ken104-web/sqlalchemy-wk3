@@ -11,6 +11,10 @@ fake = Faker()
 
 if __name__ == '__main__':
     print('Begin DB....')
+    session.query(Customer).delete()
+    session.query(Restaurant).delete()
+    session.query(Review).delete()
+    print("Done")
     restaurant = []
 
     for i in range(10):

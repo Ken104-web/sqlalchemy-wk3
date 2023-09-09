@@ -56,6 +56,10 @@ class Review(Base):
     
     def get_restaurant(self):
         return self.restaurant
+    
+    def full_review(self):
+        return f"Review for {self.restaurant.name} by {self.customer.full_name}: {self.star_rating} stars."
+        
 
 
 class Customer(Base):
@@ -94,6 +98,15 @@ class Customer(Base):
 
         return fovorite_restaurant
      
+    def add_review(self, restaurant, rating):
+        review = Review(customer=self, restaurant=restaurant, star_rating=rating)
+        session.add(review)
+
+    def delete_review(self, session, restaurant):
+        review = Restaurant(customer=self, restaurant=restaurant)
+        session.delete(review)
+
+
      
 
 

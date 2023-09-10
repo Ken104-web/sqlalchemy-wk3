@@ -69,7 +69,7 @@ class Customer(Base):
     first_name = Column(String())
     last_name = Column(String())
 
-    # many to many  with customers
+    # many to many  with restaurants
     restaurants = relationship('Restaurant', secondary=customer_restaurant, back_populates='customers')
     
     # one to many with customer

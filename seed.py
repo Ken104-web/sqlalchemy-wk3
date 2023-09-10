@@ -1,7 +1,7 @@
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 from faker import Faker
-from models import Customer, Restaurant, Review
+from models import Customer, Restaurant, Review, customer_restaurant
 
 engine = create_engine('sqlite:///reviews3.db')
 Session = sessionmaker(bind=engine)
@@ -40,6 +40,11 @@ if __name__ == '__main__':
             restaurant_id=fake.random_int(min=1, max=5)
         )
         session.add(review)
+    print('print customer_restaurant')
+    for i in session.query(Review).all():
+        assign = customer_restaurant.insert().values(restaurant_id=i.restaurant_id, customer_id=i.customer_id)
+        session.execute(assign)
+        session.commit()
 
     session.commit()
     print ('Reviews counted')

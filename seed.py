@@ -46,9 +46,8 @@ if __name__ == '__main__':
         session.execute(assign)
         session.commit()
 
-    session.commit()
     print ('Reviews counted')
-    session.query(Customer).first().restaurants
+    # session.query(Customer).first().restaurants
     # session.query(Review).first().customer
 
 

@@ -25,7 +25,8 @@ class Restaurant(Base):
 
         # many to many with customers
     customers = relationship('Customer', secondary=customer_restaurant, back_populates='restaurants')
-
+    # one to many with review
+    review = relationship('Review', backref=backref('restaurant_name'))
 
     def get_reviews(self):
         return self.reviews
@@ -48,8 +49,7 @@ class Review(Base):
     customer_id = Column(Integer, ForeignKey('customers.id'))
 
     # many to one relation
-    customer = relationship('Customer', backref=backref('review'))
-    restaurant = relationship('Restaurant', back_populates='review_comment')
+    # customer = relationship('Customer', back_populates='review')
    
     def get_customer(self):
         return self.customer
@@ -105,6 +105,8 @@ class Customer(Base):
 
     def delete_review(self, review):
         session.delete(review)
+
+
 
 
      
